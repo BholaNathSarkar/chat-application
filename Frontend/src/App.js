@@ -1,11 +1,12 @@
-import Registration from './Components/Registration/Registration.jsx';
 import './App.css';
+import UnstyledSelectForm from './Components/Registration/Registration.jsx';
 
 function App() {
   return (
     <div className="App">
       <h1>Welcome to our chat application</h1>
-      <Registration />
+      <UnstyledSelectForm />
+      
     </div>
   );
 }
