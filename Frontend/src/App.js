@@ -1,11 +1,18 @@
-import UnstyledSelectForm from "./Components/Registration/Registration.jsx";
+// routes
+import Router from "./routes";
+// theme
+import ThemeProvider from './theme';
+// components
+import ThemeSettings from './components/settings';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Welcome to our chat application</h1>
-      <UnstyledSelectForm />
-    </div>
+    <ThemeProvider>
+      <ThemeSettings>
+        {" "}
+        <Router />{" "}
+      </ThemeSettings>
+    </ThemeProvider>
   );
 }
 
