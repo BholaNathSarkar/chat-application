@@ -74,10 +74,10 @@ const ChatElement = (input) => {
               anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
               variant="dot"
             >
-              <Avatar src={faker.image.avatar()} />
+              <Avatar src={img} />
             </StyledBadge>
           ) : (
-            <Avatar src={faker.image.avatar()} />
+            <Avatar src={img} />
           )}
 
           <Stack spacing={0.3}>
