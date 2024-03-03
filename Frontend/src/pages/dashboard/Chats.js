@@ -12,42 +12,13 @@ import IconButton from "@mui/material/IconButton";
 import { ArchiveBox, CircleDashed, MagnifyingGlass } from "phosphor-react";
 import { alpha, styled } from "@mui/material/styles";
 import React from "react";
-import { faker } from "@faker-js/faker";
 import { ChatList } from "../../data";
 import { SimpleBarStyle } from "../../components/Scrollbar";
 import { useTheme } from "@emotion/react";
-
-const StyledBadge = styled(Badge)(({ theme }) => ({
-  "& .MuiBadge-badge": {
-    backgroundColor: "#44b700",
-    color: "#44b700",
-    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
-    "&::after": {
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      borderRadius: "50%",
-      animation: "ripple 1.2s infinite ease-in-out",
-      border: "1px solid currentColor",
-      content: '""',
-    },
-  },
-  "@keyframes ripple": {
-    "0%": {
-      transform: "scale(.8)",
-      opacity: 1,
-    },
-    "100%": {
-      transform: "scale(2.4)",
-      opacity: 0,
-    },
-  },
-}));
+import StyledBadge from "../../components/StyledBadge";
 
 const ChatElement = (input) => {
-  let { id, name, img, msg, time, unread, online } = input;
+  let { name, img, msg, time, unread, online } = input;
   const theme = useTheme();
   return (
     <Box
@@ -55,9 +26,10 @@ const ChatElement = (input) => {
         width: "100%",
 
         borderRadius: 1,
-        backgroundColor: theme.palette.mode === "light"
+        backgroundColor:
+          theme.palette.mode === "light"
             ? "#fff"
-            : theme.palette.background.default
+            : theme.palette.background.default,
       }}
       p={1}
     >
@@ -171,7 +143,7 @@ function Chats() {
           direction={"column"}
           sx={{ flexGrow: 1, overflow: "scroll", height: "100%" }}
         >
-          <SimpleBarStyle timeout={500} clickOnTrack={"false"}>
+          <SimpleBarStyle timeout={500} clickOnTrack={false}>
             <Stack spacing={2.4}>
               <Typography variant="subtitle2" sx={{ color: "#676767" }}>
                 Pinnged
