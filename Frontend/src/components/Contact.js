@@ -138,11 +138,13 @@ function Contact() {
             alignItems={"center"}
           >
             <Stack direction={"row"} alignItems={"center"} spacing={1}>
-              <Star size={21} />
+              <Star  size={21} />
               <Typography>Starred Messages</Typography>
             </Stack>
             <Stack>
-              <IconButton>
+              <IconButton onClick={() => {
+                  dispatch(UpdateSidebarType("STARRED"));
+                }}>
                 <CaretRight />
               </IconButton>
             </Stack>

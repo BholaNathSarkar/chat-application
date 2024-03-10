@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import Header from "./Header";
 import Footer from "./Footer";
 import Message from "./Message";
@@ -11,7 +11,7 @@ function Conversation() {
       <Header />
 
       {/* Msg */}
-      <Message />
+      <Message menu={true}/>
 
       {/* Chat Footer */}
       <Footer />
