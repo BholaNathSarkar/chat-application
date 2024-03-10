@@ -2,12 +2,18 @@ import {
   Avatar,
   Box,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Divider,
   IconButton,
+  Slide,
   Stack,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import {
   Bell,
@@ -24,9 +30,71 @@ import { ToggleSidebar, UpdateSidebarType } from "../redux/slice/app";
 import { faker } from "@faker-js/faker";
 import AntSwitch from "./AntSwitch";
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const BlockDialog = ({ open, handleClose }) => {
+  return (
+    <Dialog
+      open={open}
+      TransitionComponent={Transition}
+      keepMounted
+      onClose={handleClose}
+      aria-describedby="alert-dialog-slide-description"
+    >
+      <DialogTitle>Block this contact</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-slide-description">
+          Are you sure you want to block this contact?
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleClose}>Agree</Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
+
+const DeleteDialog = ({ open, handleClose }) => {
+
+  return (
+    <Dialog
+      open={open}
+      TransitionComponent={Transition}
+      keepMounted
+      onClose={handleClose}
+      aria-describedby="alert-dialog-slide-description"
+    >
+      <DialogTitle>Delete this Chat</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-slide-description">
+          Are you sure you want to Delete this Chats?
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleClose}>Yes</Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
+
 function Contact() {
   const theme = useTheme();
   const dispatch = useDispatch();
+
+  const [openBlock, setOpenBlock] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
+
+  const handelCloseBlock = () => {
+    setOpenBlock(false);
+  };
+  const handelCloseDelete = () => {
+    setOpenDelete(false);
+  };
+
   return (
     <Box sx={{ width: 320, height: "100vh" }}>
       <Stack sx={{ height: "100%" }}>
@@ -138,13 +206,15 @@ function Contact() {
             alignItems={"center"}
           >
             <Stack direction={"row"} alignItems={"center"} spacing={1}>
-              <Star  size={21} />
+              <Star size={21} />
               <Typography>Starred Messages</Typography>
             </Stack>
             <Stack>
-              <IconButton onClick={() => {
+              <IconButton
+                onClick={() => {
                   dispatch(UpdateSidebarType("STARRED"));
-                }}>
+                }}
+              >
                 <CaretRight />
               </IconButton>
             </Stack>
@@ -176,15 +246,35 @@ function Contact() {
             </Stack>
           </Stack>
           <Stack direction={"row"} alignItems={"center"} spacing={2}>
-            <Button startIcon={<Prohibit />} fullWidth variant="outlined">
+            <Button
+              onClick={() => {
+                setOpenBlock(true);
+              }}
+              startIcon={<Prohibit />}
+              fullWidth
+              variant="outlined"
+            >
               Block
             </Button>
-            <Button startIcon={<Trash />} fullWidth variant="outlined">
+            <Button
+              onClick={() => {
+                setOpenDelete(true);
+              }}
+              startIcon={<Trash />}
+              fullWidth
+              variant="outlined"
+            >
               Delete
             </Button>
           </Stack>
         </Stack>
       </Stack>
+      {openBlock && (
+        <BlockDialog open={openBlock} handelClose={handelCloseBlock} />
+      )}
+      {openDelete && (
+        <DeleteDialog open={openDelete} handelClose={handelCloseDelete} />
+      )}
     </Box>
   );
 }
