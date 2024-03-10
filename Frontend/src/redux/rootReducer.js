@@ -6,7 +6,7 @@ import appReducer from "./slice/app";
 
 const rootPersistConfig = {
   key: "root",
-  storage: storage,
+  storage,
   keyPrefix: "redux-",
   // whitelist: [],
   // blacklist: [],

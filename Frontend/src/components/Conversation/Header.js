@@ -13,7 +13,7 @@ import { CaretDown, MagnifyingGlass, Phone, VideoCamera } from "phosphor-react";
 import React from "react";
 import StyledBadge from "../StyledBadge";
 // import { dispatch } from '../../redux/store'
-import { toggleSidebar } from "../../redux/slice/app";
+import { ToggleSidebar } from "../../redux/slice/app";
 import { useDispatch } from "react-redux";
 
 const Header = () => {
@@ -40,7 +40,7 @@ const Header = () => {
       >
         <Stack
           onClick={() => {
-            dispatch(toggleSidebar());
+           dispatch(ToggleSidebar())
           }}
           direction={"row"}
           spacing={2}

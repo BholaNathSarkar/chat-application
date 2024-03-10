@@ -2,7 +2,6 @@ import {
   Avatar,
   Box,
   Button,
-  ButtonBase,
   Divider,
   IconButton,
   Stack,
@@ -14,7 +13,6 @@ import {
   Bell,
   CaretRight,
   Phone,
-  PhoneCall,
   Prohibit,
   Star,
   Trash,
@@ -22,7 +20,7 @@ import {
   X,
 } from "phosphor-react";
 import { useDispatch } from "react-redux";
-import { toggleSidebar } from "../redux/slice/app";
+import { ToggleSidebar, UpdateSidebarType } from "../redux/slice/app";
 import { faker } from "@faker-js/faker";
 import AntSwitch from "./AntSwitch";
 
@@ -52,7 +50,7 @@ function Contact() {
             <IconButton>
               <X
                 onClick={() => {
-                  dispatch(toggleSidebar());
+                  dispatch(ToggleSidebar());
                 }}
               />
             </IconButton>
@@ -116,7 +114,14 @@ function Contact() {
           >
             <Typography variant="subtitle2">Media, link and docs</Typography>
             <Stack spacing={0.4} direction={"row"} alignItems={"center"}>
-              <Button endIcon={<CaretRight />}>201</Button>
+              <Button
+                onClick={() => {
+                  dispatch(UpdateSidebarType("SHARED"));
+                }}
+                endIcon={<CaretRight />}
+              >
+                201
+              </Button>
             </Stack>
           </Stack>
           <Stack direction={"row"} spacing={2} alignItems={"center"}>
@@ -169,8 +174,12 @@ function Contact() {
             </Stack>
           </Stack>
           <Stack direction={"row"} alignItems={"center"} spacing={2}>
-            <Button startIcon={<Prohibit/>} fullWidth variant="outlined">Block</Button>
-            <Button startIcon={<Trash/>} fullWidth variant="outlined">Delete</Button>
+            <Button startIcon={<Prohibit />} fullWidth variant="outlined">
+              Block
+            </Button>
+            <Button startIcon={<Trash />} fullWidth variant="outlined">
+              Delete
+            </Button>
           </Stack>
         </Stack>
       </Stack>
