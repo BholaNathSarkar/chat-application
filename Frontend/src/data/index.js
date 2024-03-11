@@ -220,7 +220,7 @@ const Message_options = [
   },
 ];
 
-const SHARED_LINKS=[
+const SHARED_LINKS = [
   {
     type: "msg",
     subtype: "link",
@@ -256,10 +256,9 @@ const SHARED_LINKS=[
     incoming: true,
     outgoing: false,
   },
-  
-]
+];
 
-const SHARED_DOC=[
+const SHARED_DOC = [
   {
     type: "msg",
     subtype: "doc",
@@ -300,7 +299,7 @@ const SHARED_DOC=[
     incoming: true,
     outgoing: false,
   },
-]
+];
 
 export {
   Profile_Menu,
