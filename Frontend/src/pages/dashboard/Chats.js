@@ -1,99 +1,16 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Divider,
-  Stack,
-  Typography,
-  Badge,
-} from "@mui/material";
+import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-
 import { ArchiveBox, CircleDashed, MagnifyingGlass } from "phosphor-react";
-import { alpha, styled } from "@mui/material/styles";
 import React from "react";
 import { ChatList } from "../../data";
-import Scrollbar, { SimpleBarStyle } from "../../components/Scrollbar"; // Corrected import
+import { SimpleBarStyle } from "../../components/Scrollbar"; // Corrected import
 import { useTheme } from "@emotion/react";
-import StyledBadge from "../../components/StyledBadge";
-
-const ChatElement = ({ name, img, msg, time, unread, online }) => {
-  const theme = useTheme();
-  return (
-    <Box
-      sx={{
-        width: "100%",
-        borderRadius: 1,
-        backgroundColor:
-          theme.palette.mode === "light"
-            ? "#fff"
-            : theme.palette.background.default,
-      }}
-      p={1}
-    >
-      <Stack
-        direction={"row"}
-        spacing={2}
-        alignItems={"center"}
-        justifyContent={"space-between"}
-      >
-        <Stack direction={"row"} spacing={2}>
-          {online ? (
-            <StyledBadge
-              overlap="circular"
-              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-              variant="dot"
-            >
-              <Avatar src={img} />
-            </StyledBadge>
-          ) : (
-            <Avatar src={img} />
-          )}
-
-          <Stack spacing={0.3}>
-            <Typography variant="subtitle2">{name}</Typography>
-            <Typography variant="caption">{msg}</Typography>
-          </Stack>
-        </Stack>
-        <Stack spacing={2} alignItems={"center"}>
-          <Typography sx={{ fontWeight: 600 }} variant="caption">
-            {time}
-          </Typography>
-          <Badge color="primary" badgeContent={unread}></Badge>
-        </Stack>
-      </Stack>
-    </Box>
-  );
-};
-
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: 20,
-  backgroundColor: alpha(theme.palette.background.default, 1),
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "100%",
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const SearchInputBase = styled("input")(({ theme }) => ({
-  color: "inherit",
-  padding: theme.spacing(1, 1, 1, 0),
-  paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-  width: "100%",
-  border: "none",
-  outline: "none",
-  backgroundColor: "transparent",
-}));
+import {
+  Search,
+  SearchIconWrapper,
+  StyleBaseInput,
+} from "../../components/search";
+import ChatElement from "../../components/ChatElement";
 
 function Chats() {
   const theme = useTheme();
@@ -125,7 +42,10 @@ function Chats() {
             <SearchIconWrapper>
               <MagnifyingGlass color="#709CE6" />
             </SearchIconWrapper>
-            <SearchInputBase placeholder="Search.." aria-label="search" />
+            <StyleBaseInput
+              placeholder="Search.."
+              inputProps={{ "aria-label": "search" }}
+            />
           </Search>
         </Stack>
         <Stack spacing={1.5}>
@@ -137,8 +57,8 @@ function Chats() {
         </Stack>
         <Stack
           spacing={2}
-          direction={"column"}
-          sx={{ flexGrow: 1, overflow: "scroll", height: "100%" }}
+          direction="column"
+          sx={{ flexGrow: 1, overflowY: "scroll", height: "100%" }}
         >
           <SimpleBarStyle timeout={500} clickOnTrack={false}>
             <Stack spacing={2.4}>
