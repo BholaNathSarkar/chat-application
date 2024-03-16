@@ -2,4 +2,4 @@
 export { default } from './FormProvider';
 
 
-export { default as RHFTextField } from './RHFTextFIELD';
+export { default as RHFTextField } from './RHFTextField';

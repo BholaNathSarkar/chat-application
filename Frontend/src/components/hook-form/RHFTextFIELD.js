@@ -6,12 +6,12 @@ import { useFormContext, Controller } from "react-hook-form";
 //  @mui
 import { TextField } from "@mui/material";
 
-RHFTextFIELD.prototype={
+RHFTextField.prototype={
     name: PropTypes.string,
     helperText: PropTypes.node,
 };
 
-export default function RHFTextFIELD({ name, helperText, ...other }) {
+export default function RHFTextField({ name, helperText, ...other }) {
   const { control } = useFormContext();
   return (
     <>

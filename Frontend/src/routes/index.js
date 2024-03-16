@@ -22,10 +22,13 @@ export default function Router() {
   return useRoutes([
     {
       path: "/auth",
-      element: <MainLayout/>,
-      children:[
-        {element: <LoginPage />, path: "Login"}
-      ]
+      element: <MainLayout />,
+      children: [
+        { element: <LoginPage />, path: "Login" },
+        { element: <RegisterPage />, path: "register" },
+        { element: <ResetPassword />, path: "reset-password" },
+        { element: <NewPasswordPage />, path: "new-password" },
+      ],
     },
     {
       path: "/",
@@ -47,11 +50,15 @@ const GeneralApp = Loadable(
   lazy(() => import("../pages/dashboard/GeneralApp"))
 );
 
-const LoginPage= Loadable(
-  lazy(()=> import("../pages/auth/Login"))
-)
+const LoginPage = Loadable(lazy(() => import("../pages/auth/Login")));
 
-const Settings = Loadable(
-  lazy(() => import("../pages/dashboard/Settings"))
+const RegisterPage = Loadable(lazy(() => import("../pages/auth/Register")));
+const ResetPassword = Loadable(
+  lazy(() => import("../pages/auth/ResetPassword"))
 );
+const NewPasswordPage = Loadable(
+  lazy(() => import("../pages/auth/NewPassword"))
+);
+
+const Settings = Loadable(lazy(() => import("../pages/dashboard/Settings")));
 const Page404 = Loadable(lazy(() => import("../pages/Page404")));
