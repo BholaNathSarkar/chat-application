@@ -7,7 +7,7 @@ import {
   Divider,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import React from "react";
+import React, { useState } from "react";
 import {
   Search,
   SearchIconWrapper,
@@ -16,9 +16,18 @@ import {
 import { MagnifyingGlass, Plus } from "phosphor-react";
 import { ChatList } from "../../data";
 import ChatElement from "../../components/ChatElement";
-import Conversation from "../../components/Conversation";
+import CreateGroup from "../../sections/main/CreateGroup";
 
 function Group() {
+  const [openDialog, setopenDialog] = useState(false);
+
+  const handleOpenDialog = () => {
+    setopenDialog(true);
+  };
+  const handleCloseDialog = () => {
+    setopenDialog(false);
+  };
+
   const theme = useTheme();
   return (
     <>
@@ -58,7 +67,11 @@ function Group() {
               <Typography variant="subtitle2" component={Link}>
                 Create New Groups
               </Typography>
-              <IconButton>
+              <IconButton
+                onClick={() => {
+                  setopenDialog(true);
+                }}
+              >
                 <Plus style={{ color: theme.palette.primary.main }} />
               </IconButton>
             </Stack>
@@ -88,8 +101,10 @@ function Group() {
         </Box>
 
         {/* Right */}
-        <Conversation />
       </Stack>
+      {openDialog && (
+        <CreateGroup open={openDialog} handleClose={handleCloseDialog} />
+      )}
     </>
   );
 }

@@ -38,7 +38,7 @@ function LoginForm() {
   const {
     reset,
     setError,
-    handleSubmit, // Corrected handelSubmit to handleSubmit
+    handleSubmit, 
     formState: { errors, isSubmitting, isSubmitSuccessful },
   } = methods;
 
