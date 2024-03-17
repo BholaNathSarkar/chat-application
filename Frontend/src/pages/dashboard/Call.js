@@ -4,7 +4,6 @@ import {
   Typography,
   Link,
   IconButton,
-  Divider,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import React, { useState } from "react";
@@ -13,8 +12,7 @@ import {
   SearchIconWrapper,
   StyleBaseInput,
 } from "../../components/search";
-import { MagnifyingGlass, Phone, Plus } from "phosphor-react";
-import CreateGroup from "../../sections/main/CreateGroup";
+import { MagnifyingGlass, Phone } from "phosphor-react";
 import { CallLogElement } from "../../components/CallElement";
 import { CallLogs } from "../../data";
 import StartCall from "../../sections/main/StartCall";
