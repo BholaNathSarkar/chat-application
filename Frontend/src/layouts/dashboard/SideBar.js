@@ -16,6 +16,8 @@ import useSettings from "../../hooks/useSettings";
 import AntSwitch from "../../components/AntSwitch";
 import Logo from "../../assets/Images/logo.ico";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {logoutUser} from "../../redux/slice/auth";
 
 const getPath = (index) => {
   switch (index) {
@@ -47,6 +49,7 @@ const getMenuPath = (index) => {
 };
 
 const SideBar = () => {
+  
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -57,11 +60,12 @@ const SideBar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+    setAnchorEl(event ? event.currentTarget : null);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const dispatch = useDispatch();
 
   return (
     <Box
@@ -209,7 +213,12 @@ const SideBar = () => {
                 >
                   <Stack
                     onClick={() => {
-                      navigate(getMenuPath(idx));
+                      // if idx is 1 then dispatch logout
+                      if (idx === 2) {
+                        dispatch(logoutUser());
+                      } else {
+                        navigate(getMenuPath(idx));
+                      }
                     }}
                     sx={{ width: 100 }}
                     direction={"row"}

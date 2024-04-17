@@ -3,109 +3,109 @@ import FormProvider from "../../components/hook-form/FormProvider";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { Link as RouterLink } from "react-router-dom";
 import {
   Alert,
   Button,
   IconButton,
   InputAdornment,
-  Link,
   Stack,
 } from "@mui/material";
 import { RHFTextField } from "../../components/hook-form";
 import { Eye, EyeSlash } from "phosphor-react";
+import { useDispatch } from "react-redux";
+import { newPassword } from "../../redux/slice/auth";
+import { useSearchParams } from "react-router-dom";
 
 function NewPasswordForm() {
+  const dispatch = useDispatch();
+  const [queryParameters] = useSearchParams();
   const [showPassword, setShowPassword] = useState(false);
 
-  const NewPasswordSchema = Yup.object().shape({
-    NewPassword: Yup.string()
-      .min(6, "Password must be at least 6 character")
-      .required("Password is required"),
-    ConformPassword: Yup.string()
-      .required("Password is required")
-      .oneOf([Yup.ref("NewPassword"), null], "Password must match"),
+  const VerifyCodeSchema = Yup.object().shape({
+    
+    password: Yup.string()
+      .min(6, 'Password must be at least 6 characters')
+      .required('Password is required'),
+    passwordConfirm: Yup.string()
+      .required('Confirm password is required')
+      .oneOf([Yup.ref('password'), null], 'Passwords must match'),
   });
 
   const defaultValues = {
-    NewPassword: "",
-    ConformPassword: "",
+    password: '',
+    passwordConfirm: '',
   };
 
   const methods = useForm({
-    resolver: yupResolver(NewPasswordSchema), // Corrected the resolver to use LoginSchema
+    mode: 'onChange',
+    resolver: yupResolver(VerifyCodeSchema),
     defaultValues,
   });
 
   const {
-    reset,
-    setError,
-    handleSubmit, // Corrected handelSubmit to handleSubmit
-    formState: { errors, isSubmitting, isSubmitSuccessful },
+    handleSubmit,
   } = methods;
 
   const onSubmit = async (data) => {
     try {
-      // Submit data to backend
+    //   Send API Request
+    console.log(data)
+    console.log(queryParameters.get('code'))
+    dispatch(newPassword({...data, token: queryParameters.get('code')}));
     } catch (error) {
-      console.log(error);
-      reset();
-      setError("afterSubmit", {
-        // Corrected setError parameter
-        type: "server",
-        message: error.message,
-      });
+      console.error(error);
     }
   };
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={3}>
-        {!!errors.afterSubmit && (
-          <Alert severity="error">{errors.afterSubmit.message}</Alert>
-        )}
+        
 
         <RHFTextField
-          name="NewPassword"
-          label="New Password"
-          type={showPassword ? "text" : "password"}
+          name="password"
+          label="Password"
+          type={showPassword ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  onClick={() => setShowPassword(!showPassword)}
-                  edge="end"
-                >
-                  {showPassword ? <Eye /> : <EyeSlash />}
-                </IconButton>
-              </InputAdornment>
-            ),
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowPassword(!showPassword)}
+                    edge="end"
+                  >
+                    {showPassword ? <Eye /> : <EyeSlash />}
+                  </IconButton>
+                </InputAdornment>
+              ),
           }}
         />
+
         <RHFTextField
-          name="ConformPassword"
-          label="Conform Password"
-          type={showPassword ? "text" : "password"}
+          name="passwordConfirm"
+          label="Confirm New Password"
+          type={showPassword ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  onClick={() => setShowPassword(!showPassword)}
-                  edge="end"
-                >
-                  {showPassword ? <Eye /> : <EyeSlash />}
-                </IconButton>
-              </InputAdornment>
-            ),
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowPassword(!showPassword)}
+                    edge="end"
+                  >
+                    {showPassword ? <Eye /> : <EyeSlash />}
+                  </IconButton>
+                </InputAdornment>
+              ),
           }}
         />
+
         <Button
           fullWidth
-          color="inherit"
           size="large"
           type="submit"
           variant="contained"
+          
           sx={{
+            mt: 3,
             bgcolor: "text.primary",
             color: (theme) =>
               theme.palette.mode === "light" ? "common.white" : "grey.800",
@@ -116,7 +116,7 @@ function NewPasswordForm() {
             },
           }}
         >
-          Submit
+          Update Password
         </Button>
       </Stack>
     </FormProvider>
