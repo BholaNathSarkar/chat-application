@@ -10,15 +10,24 @@ import {
 import { useTheme } from "@mui/material/styles";
 import { CaretDown, MagnifyingGlass, Phone, VideoCamera } from "phosphor-react";
 
-import React from "react";
+import React, { useState } from "react";
 import StyledBadge from "../StyledBadge";
 // import { dispatch } from '../../redux/store'
 import { ToggleSidebar } from "../../redux/slice/app";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Header = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
+  const {current_conversation}= useSelector((state)=> state.conversation.direct_chat)
+  const [conversationMenuAnchorEl, setConversationMenuAnchorEl] =useState(null);
+  const openConversationMenu = Boolean(conversationMenuAnchorEl);
+  const handleClickConversationMenu = (event) => {
+    setConversationMenuAnchorEl(event.currentTarget);
+  };
+  const handleCloseConversationMenu = () => {
+    setConversationMenuAnchorEl(null);
+  };
   return (
     <Box
       p={2}
@@ -53,13 +62,13 @@ const Header = () => {
                 variant="dot"
               >
                 <Avatar
-                  alt={faker.name.fullName()}
-                  src={faker.image.avatar()}
+                  alt={current_conversation?.name}
+                  src={current_conversation?.img}
                 />
               </StyledBadge>
               <Stack spacing={0.2}>
                 <Typography variant="subtitle2">
-                  {faker.name.fullName()}
+                {current_conversation?.name}
                 </Typography>
                 <Typography variant="caption">Online</Typography>
               </Stack>

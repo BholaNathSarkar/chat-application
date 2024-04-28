@@ -5,6 +5,7 @@ import RegisterForm from "../../sections/auth/RegisterForm";
 import AuthSocial from "../../sections/auth/AuthSocial";
 
 function Register() {
+  
   return (
     <>
       <Typography variant="h4" gutterBottom>

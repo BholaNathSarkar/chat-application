@@ -1,18 +1,42 @@
 import { Avatar, Badge, Box, Stack, Typography } from "@mui/material";
 import StyledBadge from "./StyledBadge";
-import { useTheme } from "@mui/material/styles";
+import { alpha, useTheme } from "@mui/material/styles";
+import { useDispatch, useSelector } from "react-redux";
+import { SelectConversation } from "../redux/slice/app";
+import { useState } from "react";
 
-const ChatElement = ({ name, img, msg, time, unread, online }) => {
+const ChatElement = ({ id, name, img, msg, time, unread, online }) => {
   const theme = useTheme();
+  const dispatch = useDispatch();
+  const { room_id } = useSelector((state) => state.app);
+  const selectedChatId = room_id?.toString();
+
+  let isSelected = +selectedChatId === id;
+
+  if (!selectedChatId) {
+    isSelected = false;
+  }
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpenClose = () => {
+    setIsOpen(!isOpen);
+    dispatch(SelectConversation({ room_id: id, isOpen: !isOpen }));
+  };
+
   return (
     <Box
+      onClick={handleOpenClose}
       sx={{
+        cursor: "pointer",
         width: "100%",
         borderRadius: 1,
-        backgroundColor:
-          theme.palette.mode === "light"
-            ? "#fff"
-            : theme.palette.background.default,
+        backgroundColor: isSelected
+          ? theme.palette.mode === "light"
+            ? alpha(theme.palette.primary.main, 0.5)
+            : theme.palette.primary.main
+          : theme.palette.mode === "light"
+          ? "#fff"
+          : theme.palette.background.paper,
       }}
       p={1}
     >
